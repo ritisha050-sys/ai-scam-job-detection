@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>JobShield AI</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🤖 JobShield AI</h1>
+
+    <h3>AI Powered Job Scam Detection & Company Verification</h3>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        <h3>📝 Paste Job Description</h3>
+
+        <textarea
+            name="job_description"
+            rows="12"
+            cols="80"
+            placeholder="Paste the job description here..."></textarea>
+
+        <br><br>
+
+        <h3>📄 OR Upload PDF</h3>
+
+        <input type="file" name="pdf_file" accept=".pdf">
+
+        <br><br>
+
+        <button type="submit">
+            🔍 Analyze Job
+        </button>
+
+    </form>
+
+    {% if result %}
+
+    <hr>
+
+    <h2>{{ result }}</h2>
+
+    <h3>🤖 AI Confidence : {{ confidence }}%</h3>
+
+    <h3>📊 Risk Score : {{ risk }}%</h3>
+
+    <h3>🏢 Company Verification</h3>
+
+    {% if company_verified == True %}
+
+        <p>✅ Company Verified : {{ company_name }}</p>
+        <p>🌐 Official Website : {{ company_website }}</p>
+
+    {% elif company_verified == False %}
+
+        <p>⚠ Company : {{ company_name }}</p>
+        <p>❌ Official Website Not Found</p>
+
+    {% else %}
+
+        <p>⚠ Company could not be verified.</p>
+
+    {% endif %}
+
+    <h3>📋 Reasons</h3>
+
+    <ul>
+
+        {% for reason in reasons %}
+
+        <li>{{ reason }}</li>
+
+        {% endfor %}
+
+    </ul>
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>
